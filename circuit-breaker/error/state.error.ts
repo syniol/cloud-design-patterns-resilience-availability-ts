@@ -10,7 +10,7 @@ export class CircuitBreakerOpenStateError extends CircuitError {
     this.#cmd = cmd
   }
 
-  get command(): Command {
+  public get command(): Command {
     return this.#cmd
   }
 }
