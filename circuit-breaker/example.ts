@@ -9,20 +9,19 @@ describe('Circuit Breaker Pattern', () => {
   let stateStore: StateStore
   let logger: Logger
 
-  beforeEach(() => {
-    stateStore = new StateStore()
-    logger = new MonitoringLogger()
-  })
-
   describe('given command is executed without any error', () => {
     const commandMock: jest.Mock<Command> = jest.fn()
 
     beforeAll(() => {
+      stateStore = new StateStore()
+      logger = new MonitoringLogger()
+
       commandMock.mockImplementation(() => ({
         execute(): Promise<void> {
-          return jest.fn().mockRejectedValue(new Error(''))()
+          return jest.fn().mockResolvedValue(undefined)()
         },
       }))
+
       sut = new CircuitBreaker(stateStore, logger)
     })
 
