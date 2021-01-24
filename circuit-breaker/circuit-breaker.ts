@@ -6,22 +6,14 @@ import { StateStore } from './state'
 import { HalfOpenState } from './state'
 
 export default class CircuitBreaker {
-  readonly #logger: Logger
-  readonly #stateStore: StateStore
   readonly #closedStateHandler: StateHandler
   readonly #openStateHandler: StateHandler
   readonly #halfOpenStateHandle: StateHandler
 
-  public constructor(stateStore: StateStore, loggerService: Logger) {
-    this.#logger = loggerService
-    this.#stateStore = stateStore
-
-    this.#closedStateHandler = new ClosedState(stateStore, loggerService)
-    this.#openStateHandler = new OpenState(stateStore, loggerService)
-    this.#halfOpenStateHandle = new HalfOpenState(
-      stateStore,
-      loggerService,
-    )
+  public constructor(stateStore: StateStore, logger: Logger) {
+    this.#closedStateHandler = new ClosedState(stateStore, logger)
+    this.#openStateHandler = new OpenState(stateStore, logger)
+    this.#halfOpenStateHandle = new HalfOpenState(stateStore, logger)
   }
 
   /**

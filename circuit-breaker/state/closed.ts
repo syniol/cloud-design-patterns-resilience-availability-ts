@@ -1,26 +1,17 @@
-import { Command, Logger } from '../type'
-import { StateStore } from './store'
-import { StateHandler } from './type'
+import { Command } from '../type'
+import { State } from './state'
 
-export class ClosedState implements StateHandler {
-  #stateStore: StateStore
-  #logger: Logger
-
-  public constructor(stateStore: StateStore, logger: Logger) {
-    this.#stateStore = stateStore
-    this.#logger = logger
-  }
-
+export class ClosedState extends State {
   public async handle(cmd: Command): Promise<void> {
-    if (this.#stateStore.isClosed()) {
+    if (this.stateStore.isClosed()) {
       try {
         await cmd.execute()
       } catch (e) {
-        this.#stateStore.trip(e)
+        this.stateStore.trip(e)
 
-        this.#logger.log(`error in 'Closed' state`)
+        this.logger.log(`error in 'Closed' state`)
         if (e instanceof Error) {
-          this.#logger.log(e.message)
+          this.logger.log(e.message)
         }
       }
     }

@@ -1,9 +1,8 @@
-import { Command, Logger } from '../type'
+import { Command } from '../type'
 import { CircuitBreakerOpenStateError } from '../error'
-import { StateStore } from './store'
-import { StateHandler } from './type'
+import { State } from './state'
 
-export class OpenState implements StateHandler {
+export class OpenState extends State  {
   private static get RetryThreshold(): number {
     return process.env?.RETRY_THRESHOLD
       ? Number(process.env.RETRY_THRESHOLD)
@@ -16,23 +15,15 @@ export class OpenState implements StateHandler {
       : 20
   }
 
-  readonly #stateStore: StateStore
-  readonly #logger: Logger
-
-  public constructor(stateStore: StateStore, logger: Logger) {
-    this.#stateStore = stateStore
-    this.#logger = logger
-  }
-
   public async handle(cmd: Command): Promise<void> {
-    if (this.#stateStore.isOpen()) {
+    if (this.stateStore.isOpen()) {
       const errDate = new Date(OpenState.MaximumWaitingTimeInMinutes)
-      const errCount = this.#stateStore.numberOfErrorsFrom(errDate)
+      const errCount = this.stateStore.numberOfErrorsFrom(errDate)
 
       if (errCount > OpenState.RetryThreshold) {
-        this.#stateStore.halfOpen()
+        this.stateStore.halfOpen()
 
-        this.#logger.log('state has changed to `Half Open`')
+        this.logger.log('state has changed to `Half Open`')
       }
     }
 

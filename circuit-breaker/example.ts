@@ -1,9 +1,9 @@
-import { Command, Logger } from './type'
 import CircuitBreaker from './circuit-breaker'
+import { Command, Logger } from './type'
 import { StateStore } from './state'
 import { MonitoringLogger } from './logger'
 
-describe('Circuit Breaker', () => {
+describe('Circuit Breaker Pattern', () => {
   let sut: CircuitBreaker
 
   let stateStore: StateStore
@@ -31,7 +31,7 @@ describe('Circuit Breaker', () => {
     })
 
     it('should execute', async (done: jest.DoneCallback) => {
-      expect(sut.execute(commandMock())).toEqual(undefined)
+      expect(await sut.execute(commandMock())).toEqual(undefined)
 
       done()
     })

@@ -1,5 +1,5 @@
-import { State } from '../type'
 import CircuitError from '../error/error'
+import { State } from '../type'
 
 export class StateStore {
   #state: State
