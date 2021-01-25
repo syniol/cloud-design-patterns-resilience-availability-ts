@@ -6,6 +6,6 @@ module.exports = {
     '<rootDir>/build/',
     '<rootDir>/node_modules/',
   ],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'd.ts'],
   testMatch: ['<rootDir>/**/example.ts'],
 }

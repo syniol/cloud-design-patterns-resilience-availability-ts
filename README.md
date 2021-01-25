@@ -15,13 +15,12 @@ In order to run the examples in this repository, please run:
 
 ### Todo
  * [x] Circuit Breaker Pattern
+ * [x] Health Endpoint Monitoring Pattern
  * [ ] Retry Pattern
  * [ ] Throttling Pattern
  * [ ] Compensating Transaction Pattern
- * [ ] Health Endpoint Monitoring Pattern
  * [ ] Queue-based Load Leveling Pattern
 
 
 #### Credits
 Copyright &copy; 2021 Syniol Limited.
-
